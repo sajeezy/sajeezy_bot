@@ -1,22 +1,23 @@
 // Dependencies
-require("dotenv").config();
+const TelegramBot = require("node-telegram-bot-api");
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const { sendMessage } = require("./helpers/sendMessage");
-const port = 80;
+
+require("dotenv").config();
+
+const port = process.env.PORT || 80;
 const url = "https://api.telegram.org/bot";
 const apiToken = process.env.BOT_TOKEN;
 const telegram_url = `${url}${apiToken}/sendMessage`;
 
-
 // Configurations
 app.use(bodyParser.json());
 // Endpoints
-app.post("/start_bot", (req, res) => {
+app.post("/", (req, res) => {
   //   console.log(req.body);
   const message = req.body.message;
-  const chatId = message.chat.id;
   const sentMessage = message.text;
 
   // Regex for hello
