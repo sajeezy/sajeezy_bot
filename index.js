@@ -200,3 +200,7 @@ app.post("/" + bot.token, (req, res) => {
   bot.processUpdate(req.body);
   res.sendStatus(200);
 });
+
+// https://soshace.com/building-a-telegram-bot-with-node-js/
+// https://scotch.io/tutorials/how-to-build-a-telegram-bot-using-nodejs-and-now#toc-deploying-our-bot-with-now
+// https://www.sitepoint.com/how-to-build-your-first-telegram-chatbot-with-node-js/
