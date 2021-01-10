@@ -54,12 +54,14 @@ bot.onText(/\/bookmark/, (msg, match) => {
 // Listener (handler) for telegram's /label event
 bot.onText(/\/obt/, (msg, match) => {
     const chatId = msg.chat.id;
-    const obt = msg.text.replace("/obt", "");
-    if (obt === undefined) {
+  const obt = msg.text.substring(5);
+    if (obt === undefined || obt === "") {
       bot.sendMessage(chatId, "Please provide today's One Big Thing!");
       return;
     }
   tempOBT = obt;
+  console.log({ tempOBT });
+
     bot.sendMessage(
       chatId,
       `Today's One Big thing:\n✨ ${tempOBT} ✨ \nhas been successfully saved 👊🏾!`,
