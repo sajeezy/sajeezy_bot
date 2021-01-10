@@ -13,7 +13,7 @@ const telegram_url = `${url}${apiToken}/sendMessage`;
 // Configurations
 app.use(bodyParser.json());
 // Endpoints
-app.post("/", (req, res) => {
+app.post("/start_bot", (req, res) => {
   //   console.log(req.body);
   const message = req.body.message;
   const chatId = message.chat.id;
@@ -21,7 +21,7 @@ app.post("/", (req, res) => {
 
   // Regex for hello
   if (sentMessage.match(/hello/gi)) {
-      sendMessage(telegram_url, message, "my guy 👊🏾", res)
+    sendMessage(telegram_url, message, "my guy 👊🏾", res);
   } else {
     // if no hello present, just respond with 200
     res.status(200).send({});
