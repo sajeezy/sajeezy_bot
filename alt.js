@@ -1,53 +1,40 @@
-
-
+// Dependencies
 const TelegramBot = require("node-telegram-bot-api");
-const axios = require("axios");
 const express = require("express");
+const app = express();
 const bodyParser = require("body-parser");
 const { sendMessage } = require("./helpers/sendMessage");
+
 require("dotenv").config();
 
+const port = process.env.PORT || 80;
 const url = "https://api.telegram.org/bot";
-const token = process.env.BOT_TOKEN;
-const telegram_url = `${url}${token}/sendMessage`;
-let bot;
+const apiToken = process.env.BOT_TOKEN;
+const telegram_url = `${url}${apiToken}/sendMessage`;
 
-if (process.env.NODE_ENV === "production") {
-  bot = new TelegramBot(token);
-  bot.setWebHook(process.env.HEROKU_URL + bot.token);
-} else {
-  bot = new TelegramBot(token, { polling: true });
-}
+// Configurations
+app.use(bodyParser.json());
+// Endpoints
+app.post("/", (req, res) => {
+  //   console.log(req.body);
+  const message = req.body.message;
+  const sentMessage = message.text;
 
-// Matches "/word whatever"
-bot.onText(/\/word (.+)/, (msg, match) => {
-  const chatId = msg.chat.id;
-  const word = match[1];
-  axios
-        .post(url, {
-            chat_id: message.chat.id,
-            text: reply
-        }).then(response => {
-            console.log("Message posted");
-            // res.end("ok");
-            res.status(200).send(response);
-        }).catch(error =>{
-            console.log(error);
-            res.send(error);
-        });
-    .catch(error => {
-      const errorText = error.response.status === 404 ? `No definition found for the word: <b>${word}</b>` : `<b>An error occured, please try again later</b>`;
-      bot.sendMessage(chatId, errorText, { parse_mode:'HTML'})
-    });
+  // Regex for hello
+  if (sentMessage.match(/hello/gi)) {
+    sendMessage(telegram_url, message, "my guy 👊🏾", res);
+  } else {
+    // if no hello present, just respond with 200
+    res.status(200).send({});
+    // res.send(req.body);
+  }
 });
 
-const app = express();
+// app.post("/start_bot", (req, res) => {
+//     const { message } = req.body;
+// });
 
-app.use(bodyParser.json());
-
-app.listen(process.env.PORT);
-
-app.post("/" + bot.token, (req, res) => {
-  bot.processUpdate(req.body);
-  res.sendStatus(200);
+// Listening
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
