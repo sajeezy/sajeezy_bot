@@ -1,0 +1,20 @@
+{
+  "name": "@picortex/sajeezy_bot",
+  "version": "1.0.0",
+  "description": "Sajeezy telegram bot for my entrepreneur journal.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "telegram",
+    "sajeezy"
+  ],
+  "author": "Steven Sajja",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  }
+}
